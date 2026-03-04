@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #13a4ec;
+  --color-background-dark: #101c22;
+  --color-glass: rgba(25, 43, 51, 0.4);
+}
+
+@layer base {
+  body {
+    @apply bg-[#101c22] text-slate-100 antialiased;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-[rgba(25,43,51,0.4)] backdrop-blur-xl border border-[rgba(50,85,103,0.3)];
+  }
+  
+  .hero-gradient {
+    background: radial-gradient(circle at 50% 50%, rgba(19, 164, 236, 0.15) 0%, rgba(16, 28, 34, 0) 70%);
+  }
+  
+  .purple-glow {
+    background: radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, rgba(16, 28, 34, 0) 50%);
+  }
+}
