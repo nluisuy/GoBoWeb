@@ -407,93 +407,163 @@ const Hero = () => (
 );
 
 // ─── Beyond Software ───
-const BeyondSoftware = () => (
-  <section
-    id="platform"
-    className="py-24 scroll-mt-20 transition-colors duration-300"
-    style={{
-      borderTop: "1px solid var(--border-default)",
-      borderBottom: "1px solid var(--border-default)",
-      backgroundColor: "var(--bg-subtle)",
-    }}
-  >
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="text-center mb-16">
-        <h2
-          className="text-3xl font-bold mb-2"
-          style={{ color: "var(--text-heading)" }}
-        >
-          Más allá del Software
-        </h2>
-        <p className="text-sm text-primary uppercase font-bold tracking-widest mb-4">
-          Beyond Software
-        </p>
-        <p className="text-primary text-xs uppercase tracking-widest mb-4">
-          The Chaos of Modern Events
-        </p>
-        <p className="max-w-2xl mx-auto" style={{ color: "var(--text-body)" }}>
-          La gestión tradicional está rota. Resolvemos los puntos de fricción
-          que matan tus ingresos.
-        </p>
-      </div>
-      <div className="grid md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: <TimerOff className="w-6 h-6" />,
-            title: "Filas interminables",
-            subtitle: "Endless Lines",
-            desc: "Las filas arruinan la experiencia y frenan las ventas. Con GOBO los asistentes ordenan desde la app y retiran con QR.",
-            color: "text-red-500",
-            bg: "bg-red-500/10",
-          },
-          {
-            icon: <Wallet className="w-6 h-6" />,
-            title: "Caos en el efectivo",
-            subtitle: "Cash Chaos",
-            desc: "El efectivo genera errores y pérdidas. GOBO centraliza todos los pagos en una plataforma digital.",
-            color: "text-orange-500",
-            bg: "bg-orange-500/10",
-          },
-          {
-            icon: <BarChart3 className="w-6 h-6" />,
-            title: "Eventos a ciegas",
-            subtitle: "Blind Events",
-            desc: "Sin datos en tiempo real es imposible optimizar un evento. GOBO te da visibilidad total de ventas y comportamiento.",
-            color: "text-primary",
-            bg: "bg-primary/10",
-          },
-        ].map((item, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ y: -5 }}
-            className="glass-panel p-8 rounded-2xl group hover:border-primary/50 transition-all"
+const BeyondSoftware = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const tabs = [
+    {
+      label: "El Problema",
+      sublabel: "The Problem",
+      cards: [
+        {
+          icon: <TimerOff className="w-6 h-6" />,
+          title: "Filas interminables",
+          subtitle: "Endless Lines",
+          desc: "Las filas arruinan la experiencia y frenan las ventas. Con GOBO los asistentes ordenan desde la app y retiran con QR.",
+          color: "text-red-500",
+          bg: "bg-red-500/10",
+        },
+        {
+          icon: <Wallet className="w-6 h-6" />,
+          title: "Caos en el efectivo",
+          subtitle: "Cash Chaos",
+          desc: "El efectivo genera errores y pérdidas. GOBO centraliza todos los pagos en una plataforma digital.",
+          color: "text-orange-500",
+          bg: "bg-orange-500/10",
+        },
+        {
+          icon: <BarChart3 className="w-6 h-6" />,
+          title: "Eventos a ciegas",
+          subtitle: "Blind Events",
+          desc: "Sin datos en tiempo real es imposible optimizar un evento. GOBO te da visibilidad total de ventas y comportamiento.",
+          color: "text-primary",
+          bg: "bg-primary/10",
+        },
+      ],
+    },
+    {
+      label: "La Solución GOBO",
+      sublabel: "The GOBO Solution",
+      cards: [
+        {
+          icon: <QrCode className="w-6 h-6" />,
+          title: "Gestor de eventos en minutos",
+          subtitle: "Event Setup in Minutes",
+          desc: "Creá tu evento, configurá vendedores, menús y precios en minutos. Sin complicaciones técnicas.",
+          color: "text-emerald-500",
+          bg: "bg-emerald-500/10",
+        },
+        {
+          icon: <CreditCard className="w-6 h-6" />,
+          title: "Pagos 100% digitales",
+          subtitle: "Fully Digital Payments",
+          desc: "Cashless desde el primer momento. Aceptá tarjetas, QR y billeteras digitales sin fricciones.",
+          color: "text-primary",
+          bg: "bg-primary/10",
+        },
+        {
+          icon: <TrendingUp className="w-6 h-6" />,
+          title: "Dashboard en tiempo real",
+          subtitle: "Real-Time Dashboard",
+          desc: "Monitoreá ventas, ranking de vendedores y flujo de público desde cualquier dispositivo, en vivo.",
+          color: "text-purple-500",
+          bg: "bg-purple-500/10",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section
+      id="platform"
+      className="py-24 scroll-mt-20 transition-colors duration-300"
+      style={{
+        borderTop: "1px solid var(--border-default)",
+        borderBottom: "1px solid var(--border-default)",
+        backgroundColor: "var(--bg-subtle)",
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2
+            className="text-3xl font-bold mb-2"
+            style={{ color: "var(--text-heading)" }}
           >
-            <div
-              className={`w-12 h-12 rounded-lg ${item.bg} ${item.color} flex items-center justify-center mb-6`}
+            Más allá del Software
+          </h2>
+          <p className="text-sm text-primary uppercase font-bold tracking-widest mb-4">
+            Beyond Software
+          </p>
+          <p className="max-w-2xl mx-auto" style={{ color: "var(--text-body)" }}>
+            La gestión tradicional está rota. Resolvemos los puntos de fricción
+            que matan tus ingresos.
+          </p>
+        </div>
+
+        {/* Gallery Tabs */}
+        <div className="flex justify-center gap-2 mb-12">
+          {tabs.map((tab, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveTab(i)}
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeTab === i
+                ? "bg-primary text-white shadow-lg shadow-primary/25"
+                : "glass-panel hover:border-primary/50"
+                }`}
+              style={activeTab !== i ? { color: "var(--text-muted)" } : undefined}
             >
-              {item.icon}
-            </div>
-            <h3
-              className="text-xl font-bold mb-3"
-              style={{ color: "var(--text-heading)" }}
-            >
-              {item.title}{" "}
-              <span
-                className="block text-xs font-medium uppercase mt-1"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {item.subtitle}
+              {tab.label}
+              <span className="hidden sm:inline text-[10px] ml-1.5 opacity-70">
+                {tab.sublabel}
               </span>
-            </h3>
-            <p className="leading-relaxed" style={{ color: "var(--text-body)" }}>
-              {item.desc}
-            </p>
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-3 gap-8"
+          >
+            {tabs[activeTab].cards.map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                className="glass-panel p-8 rounded-2xl group hover:border-primary/50 transition-all"
+              >
+                <div
+                  className={`w-12 h-12 rounded-lg ${item.bg} ${item.color} flex items-center justify-center mb-6`}
+                >
+                  {item.icon}
+                </div>
+                <h3
+                  className="text-xl font-bold mb-3"
+                  style={{ color: "var(--text-heading)" }}
+                >
+                  {item.title}{" "}
+                  <span
+                    className="block text-xs font-medium uppercase mt-1"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    {item.subtitle}
+                  </span>
+                </h3>
+                <p className="leading-relaxed" style={{ color: "var(--text-body)" }}>
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
+        </AnimatePresence>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─── GOBO Flow ───
 const GoboFlow = () => (
@@ -790,26 +860,19 @@ const FieldEngineering = () => (
         </ul>
       </div>
       <div className="grid grid-cols-2 gap-6">
-        <div className="aspect-square glass-panel rounded-3xl flex items-center justify-center flex-col gap-4 border-dashed border-2">
-          <Terminal
-            className="w-12 h-12"
-            style={{ color: "var(--text-faint)" }}
+        <div className="aspect-square rounded-3xl overflow-hidden shadow-xl border border-[var(--border-default)]">
+          <img
+            src="/kiosk.png"
+            alt="Kiosco de Auto-Servicio GOBO"
+            className="w-full h-full object-cover"
           />
-          <span
-            className="text-xs font-bold uppercase"
-            style={{ color: "var(--text-faint)" }}
-          >
-            POS V1
-          </span>
         </div>
-        <div className="aspect-square glass-panel rounded-3xl flex items-center justify-center flex-col gap-4 bg-gradient-to-br from-primary/10 to-purple-500/10 border-primary/20">
-          <div className="relative">
-            <div className="absolute -inset-4 bg-primary/20 blur-xl rounded-full"></div>
-            <CreditCard className="w-12 h-12 text-primary relative z-10" />
-          </div>
-          <span className="text-xs text-primary font-bold uppercase">
-            NFC Gates
-          </span>
+        <div className="aspect-square rounded-3xl overflow-hidden shadow-xl border border-[var(--border-default)]">
+          <img
+            src="/wristband.png"
+            alt="Brazalete Cashless GOBO"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
     </div>
