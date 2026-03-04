@@ -121,13 +121,12 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <a href="#" className="flex items-center gap-2">
-            <img src="/gobo-isotipo.png" alt="" className="h-8 w-8" />
-            <img
-              src="/gobo-logo.png"
-              alt="GoBo"
-              className="h-7 hidden sm:block"
-            />
+          <a
+            href="#"
+            className="text-2xl font-black tracking-tighter"
+            style={{ color: "var(--text-heading)" }}
+          >
+            GOBO
           </a>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
@@ -328,10 +327,9 @@ const Hero = () => (
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5"></div>
             <div className="relative z-10 w-full max-w-xs space-y-6">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <img src="/gobo-isotipo.png" alt="" className="h-6 w-6" />
-                  <img src="/gobo-logo.png" alt="GoBo" className="h-5" />
-                </div>
+                <span className="text-2xl font-black text-white tracking-tighter">
+                  GOBO
+                </span>
                 <div className="flex gap-2">
                   <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                     <QrCode className="w-4 h-4 text-primary" />
@@ -977,9 +975,12 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-20">
         <div className="col-span-2">
-          <a href="#" className="flex items-center gap-2 mb-6">
-            <img src="/gobo-isotipo.png" alt="" className="h-8 w-8" />
-            <img src="/gobo-logo.png" alt="GoBo" className="h-7" />
+          <a
+            href="#"
+            className="text-2xl font-black tracking-tighter block mb-6"
+            style={{ color: "var(--text-heading)" }}
+          >
+            GOBO
           </a>
           <p className="max-w-xs mb-8" style={{ color: "var(--text-muted)" }}>
             Empoderando a los organizadores con tecnología para operar un
