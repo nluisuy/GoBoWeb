@@ -4,30 +4,123 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --color-primary: #13a4ec;
-  --color-background-dark: #101c22;
-  --color-glass: rgba(25, 43, 51, 0.4);
+}
+
+/* ─── Light Theme (Default) ─── */
+:root {
+  --bg-base: #f8fafc;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --bg-inset: #e2e8f0;
+  --bg-navbar: rgba(255, 255, 255, 0.85);
+  --bg-mobile-menu: rgba(248, 250, 252, 0.97);
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-border: rgba(203, 213, 225, 0.5);
+  --bg-mockup: linear-gradient(135deg, #0d1b24, #162a35);
+  --bg-mockup-card: rgba(30, 41, 59, 0.7);
+  --bg-mockup-stat: rgba(30, 41, 59, 0.5);
+  --bg-mockup-card-border: rgba(51, 65, 85, 0.5);
+  --bg-dashboard-panel: rgba(15, 23, 42, 0.9);
+  --bg-dashboard-stat: rgba(30, 41, 59, 0.6);
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --border-default: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --flow-step-bg: #f8fafc;
+  --flow-line: #e2e8f0;
+  --hero-gradient: radial-gradient(circle at 50% 50%, rgba(19, 164, 236, 0.08) 0%, rgba(248, 250, 252, 0) 70%);
+  --cta-glow: rgba(19, 164, 236, 0.06);
+  color-scheme: light;
+}
+
+/* ─── Dark Theme ─── */
+.dark {
+  --bg-base: #101c22;
+  --bg-elevated: #162a35;
+  --bg-subtle: #1a3040;
+  --bg-inset: #0d1519;
+  --bg-navbar: rgba(16, 28, 34, 0.8);
+  --bg-mobile-menu: rgba(16, 28, 34, 0.95);
+  --bg-glass: rgba(25, 43, 51, 0.4);
+  --bg-glass-border: rgba(50, 85, 103, 0.3);
+  --bg-mockup: linear-gradient(135deg, #0d1b24, #162a35);
+  --bg-mockup-card: rgba(30, 41, 59, 0.6);
+  --bg-mockup-stat: rgba(30, 41, 59, 0.4);
+  --bg-mockup-card-border: rgba(51, 65, 85, 0.5);
+  --bg-dashboard-panel: rgba(16, 28, 34, 0.8);
+  --bg-dashboard-stat: rgba(30, 41, 59, 0.5);
+  --text-heading: #f1f5f9;
+  --text-body: #cbd5e1;
+  --text-muted: #64748b;
+  --text-faint: #475569;
+  --border-default: #1e3a4a;
+  --border-subtle: #1a3040;
+  --flow-step-bg: #101c22;
+  --flow-line: #1e3a4a;
+  --hero-gradient: radial-gradient(circle at 50% 50%, rgba(19, 164, 236, 0.15) 0%, rgba(16, 28, 34, 0) 70%);
+  --cta-glow: rgba(19, 164, 236, 0.1);
+  color-scheme: dark;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply bg-[#101c22] text-slate-100 antialiased;
+    background-color: var(--bg-base);
+    color: var(--text-body);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-[rgba(25,43,51,0.4)] backdrop-blur-xl border border-[rgba(50,85,103,0.3)];
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--bg-glass-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
-  
+
   .hero-gradient {
-    background: radial-gradient(circle at 50% 50%, rgba(19, 164, 236, 0.15) 0%, rgba(16, 28, 34, 0) 70%);
+    background: var(--hero-gradient);
   }
-  
+
   .purple-glow {
-    background: radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, rgba(16, 28, 34, 0) 50%);
+    background: radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+  }
+
+  /* Theme toggle button animations */
+  .theme-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-default);
+    background-color: var(--bg-glass);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    border-color: #13a4ec;
+    background-color: rgba(19, 164, 236, 0.1);
+  }
+
+  .theme-toggle svg {
+    transition: transform 0.3s ease;
+  }
+
+  .theme-toggle:active svg {
+    transform: rotate(30deg);
   }
 }
