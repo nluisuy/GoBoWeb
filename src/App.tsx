@@ -1,61 +1,112 @@
-import { motion } from "motion/react";
-import { 
-  QrCode, 
-  ShoppingCart, 
-  CreditCard, 
-  Package, 
-  TimerOff, 
-  Wallet, 
-  BarChart3, 
-  CheckCircle2, 
-  Monitor, 
-  Terminal, 
-  Watch, 
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  QrCode,
+  ShoppingCart,
+  CreditCard,
+  Package,
+  TimerOff,
+  Wallet,
+  BarChart3,
+  CheckCircle2,
+  Monitor,
+  Terminal,
+  Watch,
   DoorOpen,
   Globe,
   Twitter,
   Instagram,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  Menu,
+  X,
+  ArrowRight,
+  Zap,
+  Mail
 } from "lucide-react";
 
-const Navbar = () => (
-  <nav className="sticky top-0 z-50 border-b border-primary/10 bg-[#101c22]/80 backdrop-blur-md">
-    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div className="flex items-center gap-8">
-        <span className="text-2xl font-black tracking-tighter text-white">GOBO</span>
-        <div className="hidden md:flex items-center gap-6">
-          <a href="#" className="text-sm font-medium text-slate-400 hover:text-primary transition-colors">
-            Plataforma <span className="text-[10px] block opacity-60">Platform</span>
+const navLinks = [
+  { label: "Plataforma", sublabel: "Platform", href: "#platform" },
+  { label: "Soluciones", sublabel: "Solutions", href: "#solutions" },
+  { label: "Hardware", sublabel: "Hardware", href: "#hardware" },
+];
+
+const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <nav className="sticky top-0 z-50 border-b border-primary/10 bg-[#101c22]/80 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <a href="#" className="text-2xl font-black tracking-tighter text-white">GOBO</a>
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="text-sm font-medium text-slate-400 hover:text-primary transition-colors">
+                {link.label} <span className="text-[10px] block opacity-60">{link.sublabel}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2 mr-4 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700">
+            <span className="text-xs font-bold text-primary">ES</span>
+            <span className="text-xs text-slate-500">|</span>
+            <span className="text-xs text-slate-500 hover:text-slate-300 cursor-pointer">EN</span>
+          </div>
+          <button className="hidden sm:block text-sm font-semibold text-slate-100 hover:text-primary px-4">Iniciar Sesión</button>
+          <a href="#cta" className="hidden sm:block bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-primary/20">
+            Agenda tu Demo
           </a>
-          <a href="#" className="text-sm font-medium text-slate-400 hover:text-primary transition-colors">
-            Soluciones <span className="text-[10px] block opacity-60">Solutions</span>
-          </a>
-          <a href="#" className="text-sm font-medium text-slate-400 hover:text-primary transition-colors">
-            Precios <span className="text-[10px] block opacity-60">Pricing</span>
-          </a>
+          <button
+            className="md:hidden p-2 text-slate-300 hover:text-primary transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 mr-4 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700">
-          <span className="text-xs font-bold text-primary">ES</span>
-          <span className="text-xs text-slate-500">|</span>
-          <span className="text-xs text-slate-500 hover:text-slate-300 cursor-pointer">EN</span>
-        </div>
-        <button className="hidden sm:block text-sm font-semibold text-slate-100 hover:text-primary px-4">Iniciar Sesión</button>
-        <button className="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-primary/20">
-          Agenda tu Demo
-        </button>
-      </div>
-    </div>
-  </nav>
-);
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden overflow-hidden border-t border-slate-800 bg-[#101c22]/95 backdrop-blur-xl"
+          >
+            <div className="px-6 py-6 space-y-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-lg font-semibold text-slate-200 hover:text-primary transition-colors py-2 border-b border-slate-800/50"
+                >
+                  {link.label}
+                  <span className="text-xs text-slate-500 ml-2">{link.sublabel}</span>
+                </a>
+              ))}
+              <div className="flex flex-col gap-3 pt-4">
+                <button className="text-sm font-semibold text-slate-100 hover:text-primary py-2">Iniciar Sesión</button>
+                <a href="#cta" onClick={() => setMobileOpen(false)} className="bg-primary hover:bg-primary/90 text-white px-5 py-3 rounded-lg text-sm font-bold transition-all text-center shadow-lg shadow-primary/20">
+                  Agenda tu Demo
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+};
 
 const Hero = () => (
   <section className="relative pt-20 pb-32 overflow-hidden">
     <div className="absolute inset-0 hero-gradient pointer-events-none"></div>
     <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
@@ -78,16 +129,16 @@ const Hero = () => (
           <span className="text-sm opacity-60 mt-2 block font-normal">The all-in-one operating system for ticketing, payments, and real-time event management.</span>
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl text-base font-bold transition-all shadow-xl shadow-primary/25">
+          <a href="#cta" className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl text-base font-bold transition-all shadow-xl shadow-primary/25 text-center">
             Agenda tu Demo
             <span className="text-[10px] block opacity-80 uppercase leading-none mt-0.5 font-medium">Schedule your Demo</span>
-          </button>
-          <button className="glass-panel hover:bg-slate-800 text-white px-8 py-4 rounded-xl text-base font-bold transition-all">
-            Reservar Evento
-          </button>
+          </a>
+          <a href="#platform" className="glass-panel hover:bg-slate-800 text-white px-8 py-4 rounded-xl text-base font-bold transition-all text-center">
+            Explorar Plataforma
+          </a>
         </div>
       </motion.div>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -95,12 +146,56 @@ const Hero = () => (
       >
         <div className="absolute -inset-10 bg-primary/20 blur-[100px] rounded-full"></div>
         <div className="relative glass-panel p-2 rounded-[2.5rem] shadow-2xl overflow-hidden">
-          <img 
-            src="https://picsum.photos/seed/gobo-app/1200/1600" 
-            alt="GOBO App Interface" 
-            className="rounded-[2rem] w-full shadow-inner aspect-[3/4] object-cover"
-            referrerPolicy="no-referrer"
-          />
+          {/* App mockup */}
+          <div className="rounded-[2rem] w-full aspect-[3/4] bg-gradient-to-br from-[#0d1b24] to-[#162a35] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5"></div>
+            <div className="relative z-10 w-full max-w-xs space-y-6">
+              {/* Mock phone header */}
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-black text-white tracking-tighter">GOBO</span>
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                    <QrCode className="w-4 h-4 text-primary" />
+                  </div>
+                </div>
+              </div>
+              {/* Mock event card */}
+              <div className="bg-slate-800/60 rounded-2xl p-4 border border-slate-700/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-white">Festival GOBO 2026</p>
+                    <p className="text-[11px] text-slate-400">15 Mar • Arena Central</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">ACTIVO</span>
+                  <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">8,241 ✓</span>
+                </div>
+              </div>
+              {/* Mock stats */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/30">
+                  <p className="text-[10px] text-slate-500 uppercase">Ventas</p>
+                  <p className="text-lg font-black text-white">$142K</p>
+                  <div className="text-emerald-400 text-[10px] flex items-center gap-0.5 mt-1">
+                    <TrendingUp className="w-3 h-3" /> +12%
+                  </div>
+                </div>
+                <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/30">
+                  <p className="text-[10px] text-slate-500 uppercase">Órdenes</p>
+                  <p className="text-lg font-black text-white">3,847</p>
+                  <p className="text-primary text-[10px] mt-1">En tiempo real</p>
+                </div>
+              </div>
+              {/* Mock CTA button */}
+              <button className="w-full bg-primary text-white rounded-xl py-3 text-sm font-bold shadow-lg shadow-primary/30">
+                Escanear QR →
+              </button>
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>
@@ -108,7 +203,7 @@ const Hero = () => (
 );
 
 const BeyondSoftware = () => (
-  <section className="py-24 border-y border-slate-800 bg-slate-900/30">
+  <section id="platform" className="py-24 border-y border-slate-800 bg-slate-900/30 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold mb-2">Más allá del Software</h2>
@@ -122,7 +217,7 @@ const BeyondSoftware = () => (
           { icon: <Wallet className="w-6 h-6" />, title: "Gestión de Efectivo", subtitle: "Cash Management", desc: "El conteo manual genera fugas y errores. El comercio digital garantiza una transparencia del 100%.", color: "text-orange-500", bg: "bg-orange-500/10" },
           { icon: <BarChart3 className="w-6 h-6" />, title: "Datos Oscuros", subtitle: "Dark Data", desc: "Si no puedes medirlo, no puedes crecer. Deja de adivinar y comienza a tomar decisiones basadas en datos.", color: "text-primary", bg: "bg-primary/10" }
         ].map((item, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             whileHover={{ y: -5 }}
             className="glass-panel p-8 rounded-2xl group hover:border-primary/50 transition-all"
@@ -140,7 +235,7 @@ const BeyondSoftware = () => (
 );
 
 const GoboFlow = () => (
-  <section className="py-32">
+  <section id="solutions" className="py-32 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-6">
       <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-6">
         <div className="max-w-xl">
@@ -160,13 +255,20 @@ const GoboFlow = () => (
           { icon: <CreditCard className="w-8 h-8" />, title: "3. Instant Payment", desc: "One-click checkout with stored payment methods." },
           { icon: <Package className="w-8 h-8" />, title: "4. QR Pickup", desc: "Scan at the counter and go. No queues, no friction." }
         ].map((step, i) => (
-          <div key={i} className="flex flex-col items-center text-center p-6 bg-[#101c22]">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center text-center p-6 bg-[#101c22]"
+          >
             <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/30 relative z-10 text-white">
               {step.icon}
             </div>
             <h4 className="font-bold mb-2">{step.title}</h4>
             <p className="text-sm text-slate-500">{step.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -223,11 +325,13 @@ const OrganizerDashboard = () => (
             </div>
             <div className="h-48 flex items-end justify-between gap-2 px-2">
               {[30, 45, 35, 65, 100, 55, 40].map((h, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   initial={{ height: 0 }}
                   whileInView={{ height: `${h}%` }}
-                  className={`w-full bg-primary/${i === 4 ? '100' : '20'} rounded-t ${i === 4 ? 'shadow-[0_0_20px_rgba(19,164,236,0.3)]' : ''}`}
+                  transition={{ duration: 0.8, delay: i * 0.05 }}
+                  viewport={{ once: true }}
+                  className={`w-full rounded-t ${i === 4 ? 'bg-primary shadow-[0_0_20px_rgba(19,164,236,0.3)]' : 'bg-primary/20'}`}
                 ></motion.div>
               ))}
             </div>
@@ -283,7 +387,7 @@ const FieldEngineering = () => (
 );
 
 const Hardware = () => (
-  <section className="py-24 border-t border-slate-800 bg-slate-900/20">
+  <section id="hardware" className="py-24 border-t border-slate-800 bg-slate-900/20 scroll-mt-20">
     <div className="max-w-7xl mx-auto px-6">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold mb-4">Hardware de Próxima Generación</h2>
@@ -296,16 +400,61 @@ const Hardware = () => (
           { icon: <Watch />, title: "Brazaletes Cashless", subtitle: "CASHLESS WRISTBANDS", desc: "Tecnología NFC para un flujo de caja digital y 100% libre de contacto." },
           { icon: <DoorOpen />, title: "Control de Acceso IoT", subtitle: "IOT ACCESS CONTROL", desc: "Validación inteligente y control de aforo en tiempo real por zonas." }
         ].map((item, i) => (
-          <div key={i} className="glass-panel p-8 rounded-2xl text-center hover:border-primary/40 transition-colors">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            viewport={{ once: true }}
+            className="glass-panel p-8 rounded-2xl text-center hover:border-primary/40 transition-colors"
+          >
             <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
               {item.icon}
             </div>
             <h4 className="font-bold mb-2">{item.title}</h4>
             <p className="text-[10px] text-slate-500 uppercase mb-4 tracking-widest">{item.subtitle}</p>
             <p className="text-sm text-slate-400">{item.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
+    </div>
+  </section>
+);
+
+const CTASection = () => (
+  <section id="cta" className="py-32 relative overflow-hidden scroll-mt-20">
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none"></div>
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full pointer-events-none"></div>
+    <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8">
+          <Zap className="w-4 h-4 text-primary" />
+          <span className="text-xs font-bold text-primary uppercase tracking-wider">Comienza Ahora</span>
+        </div>
+        <h2 className="text-4xl lg:text-6xl font-black tracking-tight mb-6">
+          Transforma tus Eventos
+          <span className="block text-xl lg:text-2xl font-bold text-slate-500 mt-3">Transform Your Events Today</span>
+        </h2>
+        <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+          Únete a los organizadores que ya están generando más ingresos, eliminando filas y ofreciendo una experiencia digital premium.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button className="group bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl shadow-primary/30 flex items-center gap-3">
+            Agenda tu Demo Gratis
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <a href="mailto:hello@gobo.com" className="flex items-center gap-2 text-slate-400 hover:text-primary transition-colors text-sm font-medium">
+            <Mail className="w-4 h-4" />
+            hello@gobo.com
+          </a>
+        </div>
+        <p className="text-xs text-slate-600 mt-8">Sin compromiso • Setup en 24 horas • Soporte dedicado</p>
+      </motion.div>
     </div>
   </section>
 );
@@ -326,23 +475,23 @@ const Footer = () => (
           </div>
         </div>
         {[
-          { title: "Plataforma", links: ["Ticketing", "Food & Bev", "Access Control", "Analytics"] },
-          { title: "Soluciones", links: ["Music Festivals", "Sporting Events", "Conferences", "Fairs"] },
-          { title: "Compañía", links: ["About Us", "Careers", "Blog", "Contact"] },
-          { title: "Legal", links: ["Privacy", "Terms", "Security"] }
+          { title: "Plataforma", links: [{ label: "Ticketing", href: "#platform" }, { label: "Food & Bev", href: "#solutions" }, { label: "Access Control", href: "#hardware" }, { label: "Analytics", href: "#platform" }] },
+          { title: "Soluciones", links: [{ label: "Music Festivals", href: "#solutions" }, { label: "Sporting Events", href: "#solutions" }, { label: "Conferences", href: "#solutions" }, { label: "Fairs", href: "#solutions" }] },
+          { title: "Compañía", links: [{ label: "About Us", href: "#" }, { label: "Careers", href: "#" }, { label: "Blog", href: "#" }, { label: "Contact", href: "#cta" }] },
+          { title: "Legal", links: [{ label: "Privacy", href: "#" }, { label: "Terms", href: "#" }, { label: "Security", href: "#" }] }
         ].map((section, i) => (
           <div key={i}>
             <h4 className="font-bold mb-6">{section.title}</h4>
             <ul className="space-y-4 text-sm text-slate-500">
               {section.links.map((link, j) => (
-                <li key={j}><a href="#" className="hover:text-primary transition-colors">{link}</a></li>
+                <li key={j}><a href={link.href} className="hover:text-primary transition-colors">{link.label}</a></li>
               ))}
             </ul>
           </div>
         ))}
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-slate-800 gap-6">
-        <p className="text-xs text-slate-600">© 2024 Plataforma GOBO. Todos los derechos reservados.</p>
+        <p className="text-xs text-slate-600">© 2026 Plataforma GOBO. Todos los derechos reservados.</p>
         <div className="flex items-center gap-2 text-xs text-slate-600">
           <Globe className="w-4 h-4" />
           <span>Infraestructura Global</span>
@@ -375,6 +524,7 @@ export default function App() {
           </div>
         </section>
         <Hardware />
+        <CTASection />
       </main>
       <Footer />
     </div>
