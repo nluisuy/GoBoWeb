@@ -287,27 +287,28 @@ const HeroCarousel = () => {
               transition={{ duration: 0.6 }}
             />
           </AnimatePresence>
-
-          {/* Caption overlay */}
-          <div className="absolute bottom-0 left-0 right-0 px-4 pt-8 pb-6 bg-gradient-to-t from-white/95 via-white/70 to-transparent rounded-b-[2rem]">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={current}
-                className="text-slate-800 text-sm font-bold text-center"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
-              >
-                {heroSlides[current].label}
-                <span className="block text-[10px] text-slate-500 font-normal mt-0.5">
-                  {heroSlides[current].sublabel}
-                </span>
-              </motion.p>
-            </AnimatePresence>
-          </div>
         </div>
       </motion.div>
+
+      {/* Caption below mockup */}
+      <div className="mt-5">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={current}
+            className="text-sm font-bold text-center"
+            style={{ color: "var(--text-heading)" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+          >
+            {heroSlides[current].label}
+            <span className="block text-[10px] font-normal mt-0.5" style={{ color: "var(--text-muted)" }}>
+              {heroSlides[current].sublabel}
+            </span>
+          </motion.p>
+        </AnimatePresence>
+      </div>
 
       {/* Dot indicators */}
       <div className="flex justify-center gap-2 pt-6">
