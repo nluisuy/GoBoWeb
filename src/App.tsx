@@ -248,6 +248,82 @@ const Navbar = () => {
   );
 };
 
+// ─── Hero Carousel ───
+const heroSlides = [
+  { src: "/mockup-dashboard.png", label: "Dashboard de Eventos", sublabel: "Event Dashboard" },
+  { src: "/mockup-cashless.png", label: "Pagos Cashless", sublabel: "Cashless Payments" },
+  { src: "/mockup-ticket.png", label: "Compra de Tickets", sublabel: "Ticket Purchase" },
+  { src: "/mockup-menu.png", label: "Pedidos de Comida", sublabel: "Food Ordering" },
+];
+
+const HeroCarousel = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroSlides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative flex flex-col items-center">
+      {/* Floating animation wrapper */}
+      <motion.div
+        className="relative w-[65%] mx-auto"
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="rounded-[2rem] w-full aspect-[3/4] relative overflow-hidden shadow-2xl" style={{ background: "#ffffff" }}>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={current}
+              src={heroSlides[current].src}
+              alt={heroSlides[current].label}
+              className="absolute inset-0 w-full h-full object-cover rounded-[2rem]"
+              initial={{ opacity: 0, scale: 1.08, rotate: 1 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.92, rotate: -1 }}
+              transition={{ duration: 0.6 }}
+            />
+          </AnimatePresence>
+
+          {/* Caption overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white/90 via-white/60 to-transparent rounded-b-[2rem]">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current}
+                className="text-slate-800 text-sm font-bold text-center"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {heroSlides[current].label}
+                <span className="block text-[10px] text-slate-500 font-normal mt-0.5">
+                  {heroSlides[current].sublabel}
+                </span>
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-2 pt-6">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-primary" : "w-2 bg-gray-400/40"
+              }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // ─── Hero ───
 const Hero = () => (
   <section className="relative pt-20 pb-32 overflow-hidden">
@@ -318,89 +394,7 @@ const Hero = () => (
         className="relative"
       >
         <div className="absolute -inset-10 bg-primary/20 blur-[100px] rounded-full"></div>
-        <div className="relative glass-panel p-2 rounded-[2.5rem] shadow-2xl overflow-hidden">
-          {/* App mockup — always dark for product branding */}
-          <div
-            className="rounded-[2rem] w-full aspect-[3/4] flex flex-col items-center justify-center p-8 relative overflow-hidden"
-            style={{ background: "var(--bg-mockup)" }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5"></div>
-            <div className="relative z-10 w-full max-w-xs space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-black text-white tracking-tighter">
-                  GOBO
-                </span>
-                <div className="flex gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                    <QrCode className="w-4 h-4 text-primary" />
-                  </div>
-                </div>
-              </div>
-              <div
-                className="rounded-2xl p-4 backdrop-blur-sm"
-                style={{
-                  backgroundColor: "var(--bg-mockup-card)",
-                  border: "1px solid var(--bg-mockup-card-border)",
-                }}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-white">
-                      Festival GOBO 2026
-                    </p>
-                    <p className="text-[11px] text-slate-400">
-                      15 Mar • Arena Central
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">
-                    ACTIVO
-                  </span>
-                  <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">
-                    8,241 ✓
-                  </span>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div
-                  className="rounded-xl p-3"
-                  style={{
-                    backgroundColor: "var(--bg-mockup-stat)",
-                    border: "1px solid var(--bg-mockup-card-border)",
-                  }}
-                >
-                  <p className="text-[10px] text-slate-500 uppercase">Ventas</p>
-                  <p className="text-lg font-black text-white">$142K</p>
-                  <div className="text-emerald-400 text-[10px] flex items-center gap-0.5 mt-1">
-                    <TrendingUp className="w-3 h-3" /> +12%
-                  </div>
-                </div>
-                <div
-                  className="rounded-xl p-3"
-                  style={{
-                    backgroundColor: "var(--bg-mockup-stat)",
-                    border: "1px solid var(--bg-mockup-card-border)",
-                  }}
-                >
-                  <p className="text-[10px] text-slate-500 uppercase">
-                    Órdenes
-                  </p>
-                  <p className="text-lg font-black text-white">3,847</p>
-                  <p className="text-primary text-[10px] mt-1">
-                    En tiempo real
-                  </p>
-                </div>
-              </div>
-              <button className="w-full bg-primary text-white rounded-xl py-3 text-sm font-bold shadow-lg shadow-primary/30">
-                Escanear QR →
-              </button>
-            </div>
-          </div>
-        </div>
+        <HeroCarousel />
       </motion.div>
     </div>
   </section>
@@ -567,8 +561,22 @@ const BeyondSoftware = () => {
 
 // ─── GOBO Flow ───
 const GoboFlow = () => (
-  <section id="solutions" className="py-32 scroll-mt-20">
-    <div className="max-w-7xl mx-auto px-6">
+  <section id="solutions" className="py-32 scroll-mt-20 relative overflow-hidden">
+    {/* Floating background orbs */}
+    <motion.div
+      className="absolute top-20 left-10 w-72 h-72 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
+      style={{ background: "linear-gradient(135deg, #0ea5e9, #8b5cf6)" }}
+      animate={{ x: [0, 30, -20, 0], y: [0, -20, 15, 0], scale: [1, 1.1, 0.95, 1] }}
+      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div
+      className="absolute bottom-10 right-10 w-60 h-60 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
+      style={{ background: "linear-gradient(135deg, #8b5cf6, #0ea5e9)" }}
+      animate={{ x: [0, -25, 20, 0], y: [0, 20, -15, 0], scale: [1, 0.95, 1.1, 1] }}
+      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+    />
+
+    <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-6">
         <div className="max-w-xl">
           <h2
@@ -585,16 +593,51 @@ const GoboFlow = () => (
             escaneo hasta la entrega final.
           </p>
         </div>
-        <div className="text-primary font-mono text-sm uppercase tracking-widest">
+        <motion.div
+          className="text-primary font-mono text-sm uppercase tracking-widest"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
           COMERCIO OPTIMIZADO{" "}
           <span className="opacity-60">→ OPTIMIZED COMMERCE</span>
-        </div>
+        </motion.div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
-        <div
-          className="hidden lg:block absolute top-1/2 left-0 w-full h-px -z-10"
-          style={{ backgroundColor: "var(--flow-line)" }}
-        ></div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 relative">
+        {/* Animated flow line */}
+        <div className="hidden lg:block absolute top-1/2 left-[8%] right-[8%] h-px -translate-y-1/2 -z-0">
+          <div className="w-full h-full" style={{ backgroundColor: "var(--flow-line)" }} />
+          {/* Animated dot traveling along the line */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary shadow-lg shadow-primary/50"
+            animate={{ left: ["0%", "100%"] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+          />
+          {/* Glow trail */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 w-20 h-1 rounded-full"
+            style={{ background: "linear-gradient(90deg, transparent, #0ea5e9, transparent)" }}
+            animate={{ left: ["-5%", "100%"] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+          />
+        </div>
+
+        {/* Animated arrows between cards (desktop only) */}
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={`arrow-${i}`}
+            className="hidden lg:flex absolute top-1/2 -translate-y-1/2 items-center justify-center z-10"
+            style={{ left: `${25 * (i + 1)}%`, transform: "translate(-50%, -50%)" }}
+            animate={{ x: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+          >
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="drop-shadow-lg">
+              <circle cx="14" cy="14" r="13" fill="var(--bg-base)" stroke="var(--border-default)" strokeWidth="1" />
+              <path d="M11 9l5 5-5 5" stroke="#0ea5e9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.div>
+        ))}
+
         {[
           {
             icon: <QrCode className="w-8 h-8" />,
@@ -619,23 +662,30 @@ const GoboFlow = () => (
         ].map((step, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
+            transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="flex flex-col items-center text-center p-6 transition-colors duration-300"
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="flex flex-col items-center text-center p-8 rounded-2xl transition-colors duration-300 relative group"
             style={{ backgroundColor: "var(--flow-step-bg)" }}
           >
-            <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/30 relative z-10 text-white">
+            {/* Hover glow */}
+            <div className="absolute inset-0 rounded-2xl bg-primary/0 group-hover:bg-primary/5 transition-all duration-500" />
+            <motion.div
+              className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/30 relative z-10 text-white"
+              whileHover={{ rotate: [0, -10, 10, 0] }}
+              transition={{ duration: 0.5 }}
+            >
               {step.icon}
-            </div>
+            </motion.div>
             <h4
-              className="font-bold mb-2"
+              className="font-bold mb-2 relative z-10"
               style={{ color: "var(--text-heading)" }}
             >
               {step.title}
             </h4>
-            <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+            <p className="text-sm relative z-10" style={{ color: "var(--text-muted)" }}>
               {step.desc}
             </p>
           </motion.div>
@@ -1004,7 +1054,7 @@ const CTASection = () => (
           Únete a los organizadores que ya están generando más ingresos,
           eliminando filas y ofreciendo una experiencia digital premium.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col gap-6 items-center">
           <button className="group bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl shadow-primary/30 flex items-center gap-3">
             Agenda tu Demo Gratis
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
