@@ -289,7 +289,7 @@ const HeroCarousel = () => {
           </AnimatePresence>
 
           {/* Caption overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white/90 via-white/60 to-transparent rounded-b-[2rem]">
+          <div className="absolute bottom-0 left-0 right-0 px-4 pt-8 pb-6 bg-gradient-to-t from-white/95 via-white/70 to-transparent rounded-b-[2rem]">
             <AnimatePresence mode="wait">
               <motion.p
                 key={current}
