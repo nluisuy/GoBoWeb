@@ -1061,12 +1061,12 @@ const CTASection = () => (
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
           <a
-            href="mailto:hello@gobo.com"
+            href="mailto:hola@gobopay.com"
             className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium"
             style={{ color: "var(--text-body)" }}
           >
             <Mail className="w-4 h-4" />
-            hello@gobo.com
+            hola@gobopay.com
           </a>
         </div>
         <p className="text-xs mt-8" style={{ color: "var(--text-faint)" }}>
@@ -1181,11 +1181,17 @@ const Footer = () => (
           © 2026 Plataforma GOBO. Todos los derechos reservados.
         </p>
         <div
-          className="flex items-center gap-2 text-xs"
+          className="flex items-center gap-6 text-xs"
           style={{ color: "var(--text-faint)" }}
         >
-          <Globe className="w-4 h-4" />
-          <span>Infraestructura Global</span>
+          <div className="flex items-center gap-2">
+            <Globe className="w-4 h-4" />
+            <span>New York</span>
+          </div>
+          <span>•</span>
+          <span>Buenos Aires</span>
+          <span>•</span>
+          <span>Montevideo</span>
         </div>
       </div>
     </div>
