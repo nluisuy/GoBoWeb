@@ -14,7 +14,7 @@ import {
   Watch,
   DoorOpen,
   Globe,
-  Twitter,
+  Linkedin,
   Instagram,
   ChevronRight,
   TrendingUp,
@@ -38,9 +38,9 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("gobo-theme") as Theme | null;
-      return saved || "light";
+      return saved || "dark";
     }
-    return "light";
+    return "dark";
   });
 
   useEffect(() => {
@@ -146,24 +146,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <div
-            className="hidden sm:flex items-center gap-2 mr-1 px-3 py-1.5 rounded-full border"
-            style={{
-              backgroundColor: "var(--bg-glass)",
-              borderColor: "var(--border-default)",
-            }}
-          >
-            <span className="text-xs font-bold text-primary">ES</span>
-            <span className="text-xs" style={{ color: "var(--text-faint)" }}>
-              |
-            </span>
-            <span
-              className="text-xs hover:text-primary cursor-pointer transition-colors"
-              style={{ color: "var(--text-faint)" }}
-            >
-              EN
-            </span>
-          </div>
+
           <button
             className="hidden sm:block text-sm font-semibold hover:text-primary px-4 transition-colors"
             style={{ color: "var(--text-heading)" }}
@@ -1101,7 +1084,7 @@ const Footer = () => (
             comercio sin fricciones a escala.
           </p>
           <div className="flex gap-4">
-            {[Twitter, Instagram].map((Icon, i) => (
+            {[Instagram, Linkedin].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
